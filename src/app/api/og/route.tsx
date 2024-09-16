@@ -1,6 +1,6 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from "next/server";
-import {deploymentURL} from "@/constant/env";
+import { deploymentURL } from "@/constant/env";
 
 export const runtime = 'edge';
 
@@ -11,19 +11,22 @@ export async function GET(req: NextRequest) {
 
     try {
         const { searchParams } = new URL(req.url);
-        const title = searchParams.get("title");
-        const description = searchParams.get("description");
+        const title = searchParams.get("title") || "Default Title";
+        const description = searchParams.get("description") || "Default Description";
         const logoUrl = searchParams.get("logoUrl");
-        const webAddress = searchParams.get("webAddress");
-        const bgColor = searchParams.get('bgColor');
+        const webAddress = searchParams.get("webAddress") || "www.example.com";
+        const bgColor = searchParams.get('bgColor') || '#FFFFFF'; // Fallback to white background if no bgColor is provided
+
+        // Decode the logo URL if provided, fallback to default logo
         const decodedLogoUrl = logoUrl ? decodeURIComponent(logoUrl) : `${deploymentURL}/images/logo.png`;
+
         return new ImageResponse(
             (
                 <div style={{
                     width: '100%',
                     height: '100%',
                     position: "relative",
-                    background: 'red',
+                    background: bgColor,  // Use the dynamic background color with a fallback
                     overflow: "hidden",
                     display: 'flex',
                     flexDirection: 'column',
@@ -53,6 +56,7 @@ export async function GET(req: NextRequest) {
                         borderRadius: '50%',
                         background: '#d6dbdf'
                     }}></div>
+
                     {decodedLogoUrl && (
                         <img src={decodedLogoUrl} alt="logo" width={200} height={200}
                              style={{
@@ -61,11 +65,17 @@ export async function GET(req: NextRequest) {
                                  top: 40,
                                  left: '50%',
                                  transform: 'translateX(-50%)',
-                             }}/>
+                             }}
+                        />
                     )}
 
-                    <h1 tw="text-6xl font-bold bg-yellow-200 rounded-lg uppercase py-2 px-4 text-center absolute top-72">{title}</h1>
-                    <p tw="text-6xl font-bold text-white text-center absolute top-100">{description}</p>
+                    <h1 tw="text-6xl font-bold bg-yellow-200 rounded-lg uppercase py-2 px-4 text-center absolute top-72">
+                        {title}
+                    </h1>
+                    <p tw="text-6xl font-bold text-white text-center absolute top-100">
+                        {description}
+                    </p>
+
                     <div style={{
                         position: 'absolute',
                         transform: 'translateX(-50%) rotate(-90deg)',
@@ -78,8 +88,7 @@ export async function GET(req: NextRequest) {
                         letterSpacing: 4,
                         color: 'white',
                         textTransform: 'uppercase',
-                    }}>{webAddress}
-                    </div>
+                    }}>{webAddress}</div>
 
                     <div style={{
                         position: 'absolute',
@@ -93,8 +102,8 @@ export async function GET(req: NextRequest) {
                         letterSpacing: 4,
                         color: 'white',
                         textTransform: 'uppercase',
-                    }}>{webAddress}
-                    </div>
+                    }}>{webAddress}</div>
+
                     <div style={{
                         position: 'absolute',
                         top: '20%',
@@ -106,8 +115,7 @@ export async function GET(req: NextRequest) {
                         opacity: '.2',
                         letterSpacing: 4,
                         textTransform: 'uppercase',
-                    }}>{webAddress}
-                    </div>
+                    }}>{webAddress}</div>
                 </div>
             ),
             {
@@ -119,14 +127,13 @@ export async function GET(req: NextRequest) {
                 ],
                 width: 1200,
                 height: 630,
-
             },
         );
     } catch (error: any) {
-        console.log(`${error.message}`);
+        console.error(`Error generating image: ${error.message}`);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         return new Response(`Failed to load image: ${errorMessage}`, {
             status: 500,
-        })
+        });
     }
 }
