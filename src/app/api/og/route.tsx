@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
         const description = searchParams.get("description");
         const logoUrl = searchParams.get("logoUrl");
         const webAddress = searchParams.get("webAddress");
-        const bgColor = searchParams.get("bgColor");
+        const bgColor = searchParams.get('bgColor');
         const decodedLogoUrl = logoUrl ? decodeURIComponent(logoUrl) : `${deploymentURL}/images/logo.png`;
         return new ImageResponse(
             (
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
                     width: '100%',
                     height: '100%',
                     position: "relative",
-                    background: bgColor,
+                    background: 'red',
                     overflow: "hidden",
                     display: 'flex',
                     flexDirection: 'column',
