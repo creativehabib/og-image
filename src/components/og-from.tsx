@@ -68,10 +68,15 @@ export default function OgFrom() {
     setPreviewUrl(ogImageUrl);
   }
 
-  const formFieldList = [
+  const formFieldList: Array<{
+    label: string;
+    field: keyof z.infer<typeof formSchema>;
+    placeholder: string;
+    description: string;
+  }> = [
     {
       label: "Title",
-      field: "title",
+      field: "title", // TypeScript will ensure this is a valid key
       placeholder: "Type the title",
       description: "",
     },
@@ -84,7 +89,7 @@ export default function OgFrom() {
     {
       label: "Image",
       field: "logoUrl",
-      placeholder: "Paste the image url",
+      placeholder: "Paste the image URL",
       description: `Default: ${deploymentURL}/images/logo.png`,
     },
     {
@@ -97,9 +102,8 @@ export default function OgFrom() {
       label: "BG Color",
       field: "bgColor",
       placeholder: "Enter bg bgColor code",
-      description: ""
-    }
-
+      description: "",
+    },
   ];
   return (
     <div className="max-w-6xl mx-auto md:grid md:grid-cols-2 md:gap-6 md:space-y-0 space-y-6 px-4 py-12">
