@@ -25,7 +25,7 @@ export default function OgFrom() {
   useEffect(() => {
     const params = new URLSearchParams();
     params.append("title", "Welcome to My Site");
-    params.append("description", "Welcome to My Site");
+    params.append("description", "Welcome to default description");
     params.append("webAddress", "www.example.com");
     params.append('bgColor','#FF0000');
     params.append("logoUrl", `${deploymentURL}/images/logo.png`);
