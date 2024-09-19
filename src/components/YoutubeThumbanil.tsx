@@ -1,11 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
+import {Input} from "@/components/ui/input";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {Button} from "@/components/ui/button";
 
 const YoutubeThumbnailFetcher = () => {
     const [videoId, setVideoId] = useState('');
     const [thumbnailUrl, setThumbnailUrl] = useState('');
     const [thumbnailQuality, setThumbnailQuality] = useState('default');
     const downloadRef = useRef(null);
+
+    // Default thumbnail when no video ID is entered
+    const defaultThumbnailUrl = 'https://via.placeholder.com/480x360?text=Default+Thumbnail';
 
     // Handle thumbnail download only on button click
     const handleDownload = async () => {
@@ -77,35 +83,49 @@ const YoutubeThumbnailFetcher = () => {
     useEffect(() => {
         if (videoId) {
             fetchThumbnail();
+        }else {
+            // Show default thumbnail when no video ID is entered
+            setThumbnailUrl(defaultThumbnailUrl);
         }
     }, [videoId, thumbnailQuality]);
 
     return (
         <div>
-            <input
-                type="text"
-                value={videoId}
-                onChange={(e) => setVideoId(e.target.value)}
-                placeholder="Enter YouTube video ID"
-            />
+            <h2 className={'py-2 px-4 mb-4 bg-red-700 text-white'}>YouTube Video Thumbnail Download</h2>
+            <div className={'flex mb-4'}>
+                <Input
+                    type={'text'}
+                    value={videoId}
+                    onChange={(e) => setVideoId(e.target.value)}
+                    placeholder="Enter YouTube video ID"
+                    className={'me-2'}
+                />
 
-            <select
-                value={thumbnailQuality}
-                onChange={(e) => setThumbnailQuality(e.target.value)}
-            >
-                <option value="default">Default</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-                <option value="standard">Standard</option>
-                <option value="maxres">Maxres</option>
-            </select>
+                <Select value={thumbnailQuality} onValueChange={(value) => setThumbnailQuality(value)}>
+                    <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select Quality" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="default">Default</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="maxres">Maxres</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
 
-            {thumbnailUrl && (
-                <div>
-                    <img src={thumbnailUrl} alt="YouTube Video Thumbnail" />
-                    <button onClick={handleDownload}>Download Thumbnail</button>
-                </div>
-            )}
+
+            <div>
+                <img
+                    src={thumbnailUrl}
+                    alt="YouTube Video Thumbnail"
+                    style={{width: '100%', height: '300px'}}
+                />
+                {thumbnailUrl !== defaultThumbnailUrl && (
+                    <Button className={'w-full mt-4'} onClick={handleDownload}>Download Thumbnail</Button>
+                )}
+
+            </div>
         </div>
     );
 };

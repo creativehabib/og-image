@@ -196,6 +196,7 @@ export default function OgFrom() {
               Download
             </a>
           </div>
+          <hr/>
           <YoutubeThumbnailFetcher />
         </div>
       </div>
