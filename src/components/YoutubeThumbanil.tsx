@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {Input} from "@/components/ui/input";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
@@ -8,7 +8,7 @@ const YoutubeThumbnailFetcher = () => {
     const [videoId, setVideoId] = useState('');
     const [thumbnailUrl, setThumbnailUrl] = useState('');
     const [thumbnailQuality, setThumbnailQuality] = useState('default');
-    const downloadRef = useRef(null);
+    const [loading, setLoading] = useState(false);
 
     // Default thumbnail when no video ID is entered
     const defaultThumbnailUrl = 'https://via.placeholder.com/480x360?text=Default+Thumbnail';
@@ -36,6 +36,7 @@ const YoutubeThumbnailFetcher = () => {
     };
 
     const fetchThumbnail = async () => {
+        setLoading(true);
         if (!videoId) {
             return;
         }
@@ -76,6 +77,8 @@ const YoutubeThumbnailFetcher = () => {
             setThumbnailUrl(chosenThumbnail.url);
         } catch (error) {
             console.error('Error fetching thumbnail:', error);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -114,7 +117,9 @@ const YoutubeThumbnailFetcher = () => {
                 </Select>
             </div>
 
-
+            {loading ?
+                <p>Thumbnail Loading...</p>
+                :
             <div>
                 <img
                     src={thumbnailUrl}
@@ -126,6 +131,7 @@ const YoutubeThumbnailFetcher = () => {
                 )}
 
             </div>
+            }
         </div>
     );
 };
