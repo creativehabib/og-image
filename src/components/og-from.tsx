@@ -13,6 +13,7 @@ import Image from "next/image";
 const formSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
+  anotherText: z.string().optional(),
   logoUrl: z.union([z.string().url(), z.string().length(0)]).optional(),
   webAddress: z.string().optional(),
   bgColor: z.string().optional(),
@@ -26,6 +27,7 @@ export default function OgFrom() {
     const params = new URLSearchParams();
     params.append("title", "Welcome to My Site");
     params.append("description", "Welcome to default description");
+    params.append('anotherText', 'Another Text');
     params.append("webAddress", "www.example.com");
     params.append('bgColor','#FF0000');
     params.append("logoUrl", `${deploymentURL}/images/logo.png`);
@@ -48,6 +50,7 @@ export default function OgFrom() {
     defaultValues: {
       title: "",
       description: "",
+      anotherText: "",
       logoUrl: "",
       webAddress: "",
       bgColor: ""
@@ -56,10 +59,11 @@ export default function OgFrom() {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const { title, description, logoUrl, webAddress,bgColor } = values;
+    const { title, description, anotherText, logoUrl, webAddress,bgColor } = values;
     const params = new URLSearchParams();
     if (title) {params.append("title", title);}
     if (description) {params.append("description", description);}
+    if(anotherText){params.append('anotherText', anotherText)}
     if (logoUrl) {params.append("logoUrl", logoUrl)}
     if (webAddress) {params.append("webAddress", webAddress)}
     if(bgColor){params.append('bgColor',bgColor)}
@@ -85,6 +89,12 @@ export default function OgFrom() {
       field: "description",
       placeholder: "Type the description",
       description: "",
+    },
+    {
+      label: "Another Text",
+      field: 'anotherText',
+      placeholder: "Add your another text",
+      description: ''
     },
     {
       label: "Image",
