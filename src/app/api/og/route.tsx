@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     const anotherText = searchParams.get('anotherText') || "";
     const logoUrl = searchParams.get("logoUrl");
     const webAddress = searchParams.get("webAddress") || "www.example.com";
-    const bgColor = searchParams.get("bgColor") || "#FF0000"; // Fallback to white background if no bgColor is provided
+    const bgColor = searchParams.get("bgColor") || ""; // Fallback to white background if no bgColor is provided
 
     // Decode the logo URL if provided, fallback to default logo
     const decodedLogoUrl = logoUrl ? decodeURIComponent(logoUrl) : `${deploymentURL}/images/logo.png`;

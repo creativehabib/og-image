@@ -22,6 +22,11 @@ const formSchema = z.object({
 export default function OgFrom() {
   const [copied, setCopied] = React.useState(false);
   const [previewUrl, setPreviewUrl] = React.useState("");
+  const [color, setColor] = React.useState('#FF0000');
+
+  const handleColorChange = (e) => {
+    setColor(e.target.value)
+  }
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -29,7 +34,7 @@ export default function OgFrom() {
     params.append("description", "Welcome to default description");
     params.append('anotherText', 'Another Text');
     params.append("webAddress", "www.example.com");
-    params.append('bgColor','#FF0000');
+    params.append('bgColor',color);
     params.append("logoUrl", `${deploymentURL}/images/logo.png`);
     const ogImageUrl = `/api/og?${params.toString()}`;
     setPreviewUrl(ogImageUrl);
@@ -53,7 +58,7 @@ export default function OgFrom() {
       anotherText: "",
       logoUrl: "",
       webAddress: "",
-      bgColor: ""
+      bgColor: color
     },
   });
 
@@ -66,7 +71,7 @@ export default function OgFrom() {
     if(anotherText){params.append('anotherText', anotherText)}
     if (logoUrl) {params.append("logoUrl", logoUrl)}
     if (webAddress) {params.append("webAddress", webAddress)}
-    if(bgColor){params.append('bgColor',bgColor)}
+    if(bgColor){params.append('bgColor',color)}
 
     const ogImageUrl = `/api/og?${params.toString()}`;
     setPreviewUrl(ogImageUrl);
@@ -108,12 +113,7 @@ export default function OgFrom() {
       placeholder: "www.example.com",
       description: "",
     },
-    {
-      label: "BG Color",
-      field: "bgColor",
-      placeholder: "Enter bg bgColor code",
-      description: "",
-    },
+
   ];
   return (
     <div className="max-w-6xl mx-auto md:grid md:grid-cols-2 md:gap-6 md:space-y-0 space-y-6 px-4 py-12">
@@ -139,6 +139,12 @@ export default function OgFrom() {
                 />
               </div>
             ))}
+            <FormItem>
+              <FormLabel>BG Color</FormLabel>
+              <FormControl>
+                <Input name={'bgColor'} type={'color'} onChange={handleColorChange} value={color}/>
+              </FormControl>
+            </FormItem>
             <Button type="submit" className="w-full">
               Generate ☘️
             </Button>
