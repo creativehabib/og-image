@@ -9,6 +9,7 @@ import { Check, CopyIcon } from "lucide-react";
 import React, {useEffect} from "react";
 import { deploymentURL } from "@/constant/env";
 import Image from "next/image";
+import YoutubeThumbnailFetcher from "@/components/YoutubeThumbanil";
 
 const formSchema = z.object({
   title: z.string().optional(),
@@ -195,6 +196,7 @@ export default function OgFrom() {
               Download
             </a>
           </div>
+          <YoutubeThumbnailFetcher />
         </div>
       </div>
     </div>
