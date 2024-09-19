@@ -24,7 +24,7 @@ export default function OgFrom() {
   const [previewUrl, setPreviewUrl] = React.useState("");
   const [color, setColor] = React.useState('#FF0000');
 
-  const handleColorChange = (e) => {
+  const handleColorChange = (e:any) => {
     setColor(e.target.value)
   }
 
