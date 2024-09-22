@@ -9,8 +9,8 @@ export async function GET(req: NextRequest) {
     new URL("../../../../assets/Karla-Bold.ttf", import.meta.url)
   ).then((res) => res.arrayBuffer());
 
-  const goodFont = await fetch(
-    new URL("../../../../assets/good times rg.otf", import.meta.url)
+  const interFont = await fetch(
+    new URL("../../../../assets/Inter-Black.ttf", import.meta.url)
   ).then((res) => res.arrayBuffer());
 
   try {
@@ -107,7 +107,7 @@ export async function GET(req: NextRequest) {
               opacity: ".8",
               letterSpacing: 4,
               color: "white",
-              fontFamily: '"Good Times Rg"',
+              fontFamily: '"Karla"',
               textTransform: "uppercase",
             }}
           >
@@ -141,12 +141,12 @@ export async function GET(req: NextRequest) {
             data: fontData,
           },
             {
-                name: "Good Times Rg",
-                data: goodFont
+                name: "Inter",
+                data: interFont
             }
         ],
         width: 1200,
-        height: 630,
+        height: 650,
       }
     );
   } catch (error: any) {

@@ -140,12 +140,21 @@ export default function OgFrom() {
                 />
               </div>
             ))}
-            <FormItem>
-              <FormLabel>BG Color</FormLabel>
-              <FormControl>
-                <Input name={'bgColor'} type={'color'} onChange={handleColorChange} value={color}/>
-              </FormControl>
-            </FormItem>
+
+            {/* Color Picker */}
+            <div>
+              <FormItem>
+                <FormLabel>Background Color</FormLabel>
+                <FormControl>
+                  <Input
+                      type="color"
+                      value={color}
+                      onChange={handleColorChange}
+                  />
+                </FormControl>
+              </FormItem>
+            </div>
+
             <Button type="submit" className="w-full">
               Generate ☘️
             </Button>
@@ -160,7 +169,7 @@ export default function OgFrom() {
               src={previewUrl}
               alt="Open Graph Image"
               width={1200}
-              height={630}
+              height={650}
               className="w-full h-full object-cover"
             />
           )}
@@ -183,7 +192,7 @@ export default function OgFrom() {
             </Button>
             <a
               href={previewUrl}
-              download="my-image.jpg"
+              download="my-image.webp"
               style={{
                 display: "inline-block",
                 padding: "5px 10px",
