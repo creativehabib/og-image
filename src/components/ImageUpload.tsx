@@ -9,7 +9,7 @@ export default function ImageUpload() {
   const [newSize, setNewSize] = useState(null);            // For compressed image size
   const [compressedImageName, setCompressedImageName] = useState('compressed-image.jpg'); // Set default download file name
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = (e:any) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
