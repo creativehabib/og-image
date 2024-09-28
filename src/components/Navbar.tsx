@@ -14,7 +14,7 @@ export default function Navbar() {
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-4">
               <Link href="/" className="text-gray-700 hover:text-gray-900">Home</Link>
-              <a href="#" className="text-gray-700 hover:text-gray-900">Thumbnail</a>
+              <Link href="/thumbnail" className="text-gray-700 hover:text-gray-900">Thumbnail</Link>
               <Link href="/image" className="text-gray-700 hover:text-gray-900">Image Reduce</Link>
               <a href="#" className="text-gray-700 hover:text-gray-900">Contact</a>
             </div>

@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {Input} from "@/components/ui/input";
@@ -93,8 +94,10 @@ const YoutubeThumbnailFetcher = () => {
     }, [videoId, thumbnailQuality]);
 
     return (
-        <div>
-            <h2 className={'py-2 px-4 mb-4 bg-red-700 text-white'}>YouTube Video Thumbnail Download</h2>
+        <div className="max-w-6xl mx-auto md:grid md:grid-cols-2 md:gap-6 md:space-y-0 space-y-6 px-4 py-12">
+      {/* Upload and Compress Section */}
+      <div className="bg-card p-6 rounded-lg border shadow-md">
+            <h2 className={'text-2xl font-bold mb-4'}>YouTube Video Thumbnail Download</h2>
             <div className={'flex mb-4'}>
                 <Input
                     type={'text'}
@@ -116,7 +119,9 @@ const YoutubeThumbnailFetcher = () => {
                     </SelectContent>
                 </Select>
             </div>
-
+        </div>
+        <div className="bg-card p-6 rounded-lg border shadow-md">
+        <div className="bg-muted rounded-lg overflow-hidden">
             {loading ?
                 <p>Thumbnail Loading...</p>
                 :
@@ -132,6 +137,8 @@ const YoutubeThumbnailFetcher = () => {
 
             </div>
             }
+            </div>
+            </div>
         </div>
     );
 };

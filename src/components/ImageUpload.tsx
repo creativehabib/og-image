@@ -13,6 +13,7 @@ export default function ImageUpload() {
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
   const [originalSize, setOriginalSize] = useState<string | null>(null);  // For original image size
   const [newSize, setNewSize] = useState<string | null>(null);            // For compressed image size
+  const [compressionQuality, setCompressionQuality] = useState<number>(0.5); // Default compression quality (medium)
   const [compressedImageName, setCompressedImageName] = useState<string>('compressed-image.jpg'); // Set default download file name
 
   // Handle the image upload
@@ -57,9 +58,8 @@ export default function ImageUpload() {
       // Draw the image on the canvas
       ctx.drawImage(image, 0, 0, width, height);
 
-      // Compress the image by changing the quality (0.5 = 50% quality)
-      const quality = 0.5;
-      const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+      // Compress the image based on selected quality
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', compressionQuality);
 
       // Get the new file size
       const byteString = atob(compressedDataUrl.split(',')[1]);
@@ -68,6 +68,18 @@ export default function ImageUpload() {
       setCompressedImage(compressedDataUrl);
       setNewSize(byteSize.toFixed(2) + ' KB');  // Store compressed image size
     };
+  };
+
+  // Handle compression quality selection
+  const handleQualityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = e.target.value;
+    if (selectedValue === 'high') {
+      setCompressionQuality(0.8);  // High quality (80%)
+    } else if (selectedValue === 'medium') {
+      setCompressionQuality(0.5);  // Medium quality (50%)
+    } else {
+      setCompressionQuality(0.2);  // Low quality (20%)
+    }
   };
 
   return (
@@ -83,6 +95,16 @@ export default function ImageUpload() {
             <p>Original Size: {originalSize}</p> {/* Display original image size */}
           </div>
         )}
+
+        {/* Compression Quality Options */}
+        <div className="mt-4">
+          <label htmlFor="quality" className="block font-medium mb-2">Select Compression Quality:</label>
+          <select id="quality" onChange={handleQualityChange} className="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none">
+            <option value="high">High</option>
+            <option value="medium" selected>Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
 
         <button onClick={handleImageCompression} disabled={!selectedImage} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
           Compress Image
