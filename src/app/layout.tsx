@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 const solaimanLipi = localFont({
@@ -22,7 +23,10 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${solaimanLipi.variable} antialiased`} suppressHydrationWarning={true}>
-        {children}
+          <Navbar/>
+        <div className="container mx-auto px-4 py-8">
+            {children}
+        </div>
       </body>
     </html>
   );
