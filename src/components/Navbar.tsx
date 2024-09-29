@@ -54,6 +54,7 @@ export default function Navbar() {
               <Link href="/image" className="block text-gray-700 hover:text-gray-900">
                 Image Reduce
               </Link>
+              <Link href={'/blog'} className="block text-gray-700 hover:text-gray-900">Blog</Link>
               <Link href="/" className="block text-gray-700 hover:text-gray-900">
                 Contact
               </Link>
